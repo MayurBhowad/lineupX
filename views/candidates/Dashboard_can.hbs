@@ -1,0 +1,169 @@
+<style>
+    .card-deck {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .card-deck .col {
+        width: 100%;
+        margin: 0 1rem;
+    }
+
+    .rec-off {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        margin: 0 1rem;
+    }
+
+    @media only screen and (max-width: 444px) {
+        .rec-off {
+            display: block;
+        }
+
+        .action {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+</style>
+
+<div class="container-fluid">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Received Offers</a></li>
+        <li><a data-toggle="tab" href="#menu1">Accepted Offers</a></li>
+        <li><a data-toggle="tab" href="#menu2">Rejected Offers</a></li>
+    </ul>
+    <br>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <div class="card-deck">
+                <div class="col mb-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="rec-off">
+                                <div class="left">
+                                    <p><span style="font-weight: bold;">Job Title</span></p>
+                                    <p>Company name, Location</p>
+                                </div>
+                                <div class="right">
+                                    <p style="text-align:end; margin-right: 10px">Received Date</p>
+                                    <div class="action">
+                                        <button>Accept</button>
+                                        <button>Reject</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="rec-off">
+                                <div class="left">
+                                    <p><span style="font-weight: bold;">Job Title</span></p>
+                                    <p>Company name, Location</p>
+                                </div>
+                                <div class="right">
+                                    <p style="text-align:end; margin-right: 10px">Received Date</p>
+                                    <div class="action">
+                                        <button>Accept</button>
+                                        <button>Reject</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <div class="card-deck">
+                <div class="col mb-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="rec-off">
+                                <div class="left">
+                                    <p><span style="font-weight: bold;">Job Title</span></p>
+                                    <p>Company name, Location</p>
+                                </div>
+                                <div class="right">
+                                    <p style="text-align:end; margin-right: 10px">Received Date</p>
+                                    <div class="action">
+                                        <button>Accept</button>
+                                        <button>Reject</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="rec-off">
+                                <div class="left">
+                                    <p><span style="font-weight: bold;">Job Title</span></p>
+                                    <p>Company name, Location</p>
+                                </div>
+                                <div class="right">
+                                    <p style="text-align:end; margin-right: 10px">Received Date</p>
+                                    <div class="action">
+                                        <button>Accept</button>
+                                        <button>Reject</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <div class="card-deck">
+                <div class="col mb-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="rec-off">
+                                <div class="left">
+                                    <p><span style="font-weight: bold;">Job Title</span></p>
+                                    <p>Company name, Location</p>
+                                </div>
+                                <div class="right">
+                                    <p style="text-align:end; margin-right: 10px">Received Date</p>
+                                    <div class="action">
+                                        <button>Accept</button>
+                                        <button>Reject</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="rec-off">
+                                <div class="left">
+                                    <p><span style="font-weight: bold;">Job Title</span></p>
+                                    <p>Company name, Location</p>
+                                </div>
+                                <div class="right">
+                                    <p style="text-align:end; margin-right: 10px">Received Date</p>
+                                    <div class="action">
+                                        <button>Accept</button>
+                                        <button>Reject</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

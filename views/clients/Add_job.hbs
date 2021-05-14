@@ -1,0 +1,85 @@
+<div class="container-fluid">
+    <div class="col col-md-3">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                            Candidate Applications</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <ul class="list-group">
+                        <li class="list-group-item"><span class="badge">253</span> New</li>
+                        <li class="list-group-item"><span class="badge">17</span> Rejected</li>
+                        <li class="list-group-item"><span class="badge">3</span> Selected</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                            Blog</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <ul class="list-group">
+                        <li class="list-group-item"><span class="badge">12</span> New</li>
+                        <li class="list-group-item"><span class="badge">5</span> Deleted</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                            Settings</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <ul class="list-group">
+                        <li class="list-group-item"><span class="badge">1</span> Users Reported</li>
+                        <li class="list-group-item"><span class="badge">5</span> User Waiting Activation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <h1 class="text-center login-title"> New Job</h1>
+                <div class="account-wall">
+
+
+                    <form class="form-signin" method="POST" action={{session.actions.postjob}}>
+                        <input type="text" name="title" class="form-control" placeholder="Title" required
+                            autofocus><br />
+                        <input type="text" name="designation" class="form-control" placeholder="Designation" required
+                            autofocus><br />
+                        <input type="text" name="company" class="form-control" placeholder="Company" required
+                            autofocus><br />
+                        <input type="text" name="location" class="form-control" placeholder="Location" required
+                            autofocus><br />
+
+                        <input type="text" name="skills" class="form-control" placeholder="Skills" required>
+                        <p class="font-weight-light text-muted">Separate skills using ','</p>
+
+
+                        <textarea name="description" class="form-control" placeholder="Description"
+                            required></textarea><br>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            Post</button>
+                        <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
+                    </form>
+                </div>
+                {{!-- <a href="" class="text-center new-account">Log in? </a> --}}
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -14,9 +14,9 @@ const clientSchema = new Schema({
         type: String,
         required: true
     },
-    skills: [{
+    company: {
         type: String
-    }]
+    }
 });
 
 const Client = mongoose.model('Client', clientSchema);

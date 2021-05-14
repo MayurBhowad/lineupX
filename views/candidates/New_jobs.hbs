@@ -1,0 +1,76 @@
+<style>
+    .card-deck {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .card-deck .col {
+        width: 100%;
+        margin: 0 1rem;
+    }
+
+    .rec-off {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        margin: 0 1rem;
+    }
+
+    @media only screen and (max-width: 444px) {
+        .rec-off {
+            display: block;
+        }
+
+        .action {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+</style>
+
+<div class="container">
+    <h3>New Jobs</h3>
+    <hr>
+    <div class="card-deck">
+        {{#each jobs}}
+        <div class="col mb-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="rec-off">
+                        <div class="left">
+                            <p><span style="font-weight: bold;">{{title}}</span></p>
+                            <p>{{company}}, {{location}}</p>
+                        </div>
+                        <div class="right">
+                            <p style="text-align:end; margin-right: 10px">Posted on</p>
+                            <div class="action">
+                                <button>Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        <div class="col mb-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="rec-off">
+                        <div class="left">
+                            <p><span style="font-weight: bold;">Job Title</span></p>
+                            <p>Company name, Location</p>
+                        </div>
+                        <div class="right">
+                            <p style="text-align:end; margin-right: 10px">Posted on</p>
+                            <div class="action">
+                                <button>Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

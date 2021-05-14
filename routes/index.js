@@ -3,13 +3,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  let session = req.session;
+
   const renderData = {
     title: 'home',
-    isAuthenticated: false,
     user: 'candidate'
   }
 
-  res.render('home', { renderData });
+  res.render('home', { renderData, session });
 });
 
 module.exports = router;

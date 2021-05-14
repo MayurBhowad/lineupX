@@ -14,9 +14,9 @@ const candidateSchema = new Schema({
         type: String,
         required: true
     },
-    company: {
+    skills: [{
         type: String
-    }
+    }]
 });
 
 const Candidate = mongoose.model('Candidate', candidateSchema);
