@@ -6,24 +6,7 @@ const jwt = require('jsonwebtoken');
 const Candidate = require('../models/Candidate');
 const Job = require('../models/Jobs');
 
-const redirectLogin = (req, res, next) => {
-    let action = '/candidate/login';
-    if (!req.session.candidateId) {
-        res.redirect('/candidate/login')
-    } else {
-        next()
-    }
-}
-
-const redirectDashboard = (req, res, next) => {
-    console.log(req.session.isAuthenticated);
-    if (req.session.candidateId) {
-        res.redirect('/candidate/dashboard')
-    } else {
-        next()
-    }
-}
-
+const { canRedirectDashboard, canRedirectLogin } = require('../middleware/candidateRedirect')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -31,13 +14,13 @@ router.get('/', function (req, res, next) {
 });
 
 // provide registration page to frontent
-router.get('/register', (req, res) => {
+router.get('/register', canRedirectDashboard, (req, res) => {
     let action = '/candidate/register';
     res.render('Register', { user: 'Candidate', action, client: false })
 })
 
 // get POST data from front end registration form
-router.post('/register', async (req, res) => {
+router.post('/register', canRedirectDashboard, async (req, res) => {
     const { name, email, password, skills } = req.body;
 
     const newCandidate = new Candidate({ name, email, password, skills })
@@ -47,12 +30,12 @@ router.post('/register', async (req, res) => {
     newCandidate.save().then(candidate => res.redirect('/candidate/login')).catch(err => console.log(err));
 })
 
-router.get('/login', async (req, res) => {
+router.get('/login', canRedirectDashboard, async (req, res) => {
     let action = '/candidate/login';
     res.render('Login', { user: 'Candidate', action })
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', canRedirectDashboard, async (req, res) => {
     let action = '/candidate/login';
     const { email, password } = req.body;
     const candidate = await Candidate.findOne({ email });
@@ -78,7 +61,7 @@ router.post('/login', async (req, res) => {
     res.redirect('/candidate/dashboard');
 })
 
-router.get('/dashboard', redirectLogin, (req, res) => {
+router.get('/dashboard', canRedirectLogin, (req, res) => {
     const session = req.session;
     res.render("candidates/Dashboard_can", { name: "no name", session })
 })
@@ -95,9 +78,8 @@ router.post('/logout', (req, res) => {
     })
 })
 
-router.get('/alljobs', (req, res) => {
+router.get('/alljobs', canRedirectLogin, (req, res) => {
     const { session } = req;
-    console.log('inside alljobs');
     Job.find({}).lean().then(jobs => {
         if (!jobs) {
             let error = 'Job not found!'

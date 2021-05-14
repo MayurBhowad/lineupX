@@ -6,37 +6,22 @@ const jwt = require('jsonwebtoken');
 const Client = require('../models/Client');
 const Job = require('../models/Jobs');
 const Application = require('../models/Application');
+const { cliRedirectDashboard, cliRedirectLogin } = require('../middleware/clientRedirect');
 
-const redirectLogin = (req, res, next) => {
-    let action = '/client/login';
-    if (!req.session.clientId) {
-        res.redirect('/client/login')
-    } else {
-        next()
-    }
-}
 
-const redirectDashboard = (req, res, next) => {
-    console.log(req.session.isAuthenticated);
-    if (req.session.clientId) {
-        res.redirect('/client/dashboard')
-    } else {
-        next()
-    }
-}
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
     res.render('home', { title: 'client' });
 });
 
-router.get('/register', redirectDashboard, (req, res) => {
+router.get('/register', cliRedirectDashboard, (req, res) => {
     let action = '/client/register';
 
     res.render('Register', { user: 'Employer', action, client: true })
 })
 
-router.post('/register', redirectDashboard, async (req, res) => {
+router.post('/register', cliRedirectDashboard, async (req, res) => {
     const { name, email, company, password } = req.body;
     const newClient = new Client({ name, email, company, password });
     const hashed = await bcrypt.hash(password, 10);
@@ -44,12 +29,12 @@ router.post('/register', redirectDashboard, async (req, res) => {
     newClient.save().then(client => res.redirect('/client/login')).catch(err => console.log(err));
 })
 
-router.get('/login', redirectDashboard, (req, res) => {
+router.get('/login', cliRedirectDashboard, (req, res) => {
     let action = '/client/login';
     res.render('Login', { user: 'Employer', action })
 })
 
-router.post('/login', redirectDashboard, async (req, res) => {
+router.post('/login', cliRedirectDashboard, async (req, res) => {
     let action = `"/client/login"`;
     const { email, password } = req.body;
     const client = await Client.findOne({ email });
@@ -77,7 +62,7 @@ router.post('/login', redirectDashboard, async (req, res) => {
 })
 
 
-router.get('/dashboard', redirectLogin, (req, res) => {
+router.get('/dashboard', cliRedirectLogin, (req, res) => {
     const session = req.session;
     res.render("clients/Dashboard_cli", { name: "no name", session })
 })
@@ -95,13 +80,12 @@ router.post('/logout', (req, res) => {
 })
 
 
-router.get('/postjob', redirectLogin, (req, res) => {
-    console.log(req.session);
+router.get('/postjob', cliRedirectLogin, (req, res) => {
     const session = req.session;
     res.render('clients/Add_job', { session })
 })
 
-router.post('/postjob', redirectLogin, async (req, res) => {
+router.post('/postjob', cliRedirectLogin, async (req, res) => {
     const { title, designation, company, location, skills, description } = req.body;
     const { clientId } = req.session;
     const newJob = new Job({ title, designation, company, location, skills, description, clientId })
@@ -109,10 +93,9 @@ router.post('/postjob', redirectLogin, async (req, res) => {
     newJob.save().then(() => res.redirect('/client/dashboard'))
 })
 
-router.get('/showjobs', (req, res) => {
+router.get('/showjobs', cliRedirectLogin, (req, res) => {
     const session = req.session;
     Job.find({ clientId: session.clientId }).lean().then(jobs => {
-        console.log(jobs);
         if (!jobs) {
             let error = 'jobs not found!'
             return res.render('clients/Show_jobs', { session, error })
@@ -122,11 +105,10 @@ router.get('/showjobs', (req, res) => {
 
 })
 
-router.get('/jobapplications/:id', (req, res) => {
+router.get('/jobapplications/:id', cliRedirectLogin, (req, res) => {
     const { session } = req;
     const { id } = req.params;
     Application.find({ jobId: id }).lean().populate('Candidate', ['name', 'skills']).then(applications => {
-        console.log(applications);
         if (!applications.length > 0) {
             let error = 'application not found!';
             return res.render('clients/Show_apps', { session, error })
