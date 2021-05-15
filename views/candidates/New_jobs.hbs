@@ -31,6 +31,9 @@
 </style>
 
 <div class="container">
+    {{#if session.error.E_403}}
+    <h3 style="text-align: center; color: red">{{session.error.E_403}}</h3>
+    {{/if}}
     <h3>New Jobs</h3>
     <hr>
     <div class="card-deck">
@@ -45,9 +48,9 @@
                         </div>
                         <div class="right">
                             <p style="text-align:end; margin-right: 10px">Posted on</p>
-                            <div class="action">
+                            <form class="action" method="POST" action="/candidate/apply/{{_id}}">
                                 <button>Apply</button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -48,12 +48,15 @@ router.post('/login', cliRedirectDashboard, async (req, res) => {
         return res.render('Login', { user: 'Employer', action, error })
     }
 
+    const token = jwt.sign({ id: client.id }, process.env.JWT_SECRET);
+
     let actions = {
         logout: "/client/logout",
         postjob: "/client/postjob"
     }
 
     req.session.clientId = client.id;
+    req.session.client_token = token;
     req.session.name = client.name;
     req.session.isAuthenticated = true;
     req.session.isClient = true;
@@ -102,7 +105,6 @@ router.get('/showjobs', cliRedirectLogin, (req, res) => {
         }
         res.render('clients/Show_jobs', { session, jobs })
     })
-
 })
 
 router.get('/jobapplications/:id', cliRedirectLogin, (req, res) => {

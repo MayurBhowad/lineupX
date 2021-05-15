@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const Candidate = require('../models/Candidate');
 const Job = require('../models/Jobs');
+const Application = require('../models/Application');
 
 const { canRedirectDashboard, canRedirectLogin } = require('../middleware/candidateRedirect')
 
@@ -48,12 +49,14 @@ router.post('/login', canRedirectDashboard, async (req, res) => {
         let error = 'Password is incorrect!';
         return res.render('Login', { user: 'Candidate', action, error })
     }
+    const token = jwt.sign({ id: candidate.id }, process.env.JWT_SECRET);
 
     let actions = {
         logout: "/candidate/logout"
     }
 
     req.session.candidateId = candidate.id;
+    req.session.candidate_token = token;
     req.session.name = candidate.name;
     req.session.isAuthenticated = true;
     req.session.isClient = false;
@@ -81,13 +84,40 @@ router.post('/logout', (req, res) => {
 router.get('/alljobs', canRedirectLogin, (req, res) => {
     const { session } = req;
     Job.find({}).lean().then(jobs => {
+        console.log(jobs);
         if (!jobs) {
             let error = 'Job not found!'
             return res.render('candidate', { session, error });
         }
+        console.log(session);
         res.render('candidates/New_jobs', { session, jobs });
 
     }).catch(err => console.log(err))
+})
+
+
+router.post('/apply/:jobid', (req, res) => {
+    const { candidateId } = req.session;
+    const { jobid } = req.params;
+    const newApplication = new Application({
+        jobId: jobid,
+        candidateId
+    })
+
+    Application.find({ candidateId }).then(apps => {
+        let app_err = {}
+        if (apps) {
+            let exist = apps.some(a => a.jobId == jobid)
+            if (!exist) {
+                app_err = {};
+                req.session.error = app_err
+                return newApplication.save().then(application => res.redirect('/candidate/alljobs')).catch(err => console.log(err))
+            }
+            app_err.E_403 = 'you already apply for this!'
+            req.session.error = app_err
+            return res.redirect('/candidate/alljobs')
+        }
+    })
 })
 
 module.exports = router;
