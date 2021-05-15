@@ -15,6 +15,7 @@ MONGO_DB= [[database string]]
 SESS_NAME = [[session name]],
 NODE_ENV = development,
 SESS_SECRET = [[jsonwebtoken secret]],
+JWT_SECRET=[[jwt secret]],
 ```
 
 ## Running
